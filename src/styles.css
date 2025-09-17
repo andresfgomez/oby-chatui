@@ -207,3 +207,21 @@ pre { overflow-x: auto; padding: 12px; border-radius: 8px; background: #0a0f1e; 
 .newchat-btn:hover {
   background: var(--bubble-assistant);
 }
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite, fadein 200ms ease-in;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

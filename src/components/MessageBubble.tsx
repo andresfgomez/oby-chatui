@@ -1,6 +1,7 @@
 import React from 'react'
 import type { ChatMessage } from '../types'
 import Markdown from './Markdown'
+import Spinner from './Spinner'
 
 export default function MessageBubble({ msg }: { msg: ChatMessage }) {
   return (
@@ -10,7 +11,9 @@ export default function MessageBubble({ msg }: { msg: ChatMessage }) {
         {msg.streaming ? ' • typing…' : ''}
       </div>
       <div className={`bubble ${msg.role}`}>
-        <Markdown content={msg.content} />
+        {msg.role === 'assistant' && !msg.content
+          ? <Spinner />
+          : <Markdown content={msg.content} />}
       </div>
     </div>
   )

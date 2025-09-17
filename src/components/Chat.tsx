@@ -47,6 +47,7 @@ export default function Chat() {
   messages.push({ id: '4', role: 'user', content: 'Thank you for your assistance!', createdAt: Date.now() })
 
   const wsUrl = useMemo(() => import.meta.env.VITE_WS_URL as string, [])
+  
   const onEvent = useCallback((evt: IncomingEvent) => {
     if (evt.type === 'message') {
       setMessages(prev => [...prev, evt.message])
@@ -85,6 +86,16 @@ export default function Chat() {
 
     // Ask backend to start producing a response stream with a new responseId
     const responseId = uid()
+
+    const placeholder: ChatMessage = {
+      id: responseId,
+      role: 'assistant',
+      content: '',       // will be replaced by tokens
+      createdAt: Date.now(),
+      streaming: true    // flag: still typing
+    }
+    setMessages(prev => [...prev, placeholder])
+
     const payload: OutgoingMessage = { type: 'chat', id: responseId, content }
     send(payload)
   }
